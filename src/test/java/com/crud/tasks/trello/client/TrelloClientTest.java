@@ -1,5 +1,6 @@
 package com.crud.tasks.trello.client;
 
+import com.crud.tasks.domain.BadgesDto;
 import com.crud.tasks.domain.CreatedTrelloCard;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -73,7 +76,8 @@ public class TrelloClientTest {
         CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
                 "1",
                 "Test task",
-                "http://test.com"
+                "http://test.com",
+                new BadgesDto()
         );
 
         when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
@@ -87,11 +91,9 @@ public class TrelloClientTest {
         assertEquals("http://test.com", newCard.getShortUrl());
     }
     @Test
-    public void shouldReturnEmptyList() throws URISyntaxException{
+    public void shouldReturnEmptyList() {
         //Given
-        URI uri = new URI("http://test.com/members/rafabarcik/boards?key=test&token=test&fields=name,id&lists=all");
-
-        when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
+        when(restTemplate.getForObject(any(), eq(TrelloBoardDto[].class))).thenReturn(null);
 
         //When
         List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getTrelloBoards();
