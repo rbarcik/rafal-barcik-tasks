@@ -9,4 +9,5 @@ public class Mail {
     private String mailto;
     private String subject;
     private String message;
+    private String toCc;
 }
