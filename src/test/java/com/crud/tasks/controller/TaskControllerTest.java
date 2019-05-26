@@ -94,7 +94,7 @@ public class TaskControllerTest {
         TaskDto updatedTaskDto = new TaskDto(1L, "Title Updated", "Content Updated");
         Task updatedTask = new Task(1L, "Title Updated", "Content Updated");
         TaskDto taskDtoToUpdate = new TaskDto(1L, "Title Updated", "Content Updated");
-        when(taskMapper.mapToTask(any())).thenReturn(task);
+        when(taskMapper.mapToTask(eq(updatedTaskDto))).thenReturn(task);
         when(service.saveTask(task)).thenReturn(updatedTask);
         when(taskMapper.mapToTaskDto(updatedTask)).thenReturn(updatedTaskDto);
         Gson gson = new Gson();
